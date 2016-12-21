@@ -1,0 +1,118 @@
+Initialize the TCNTBn register with 159 (50 + 109) and TCMPBn with 109.
+6. Start Timer: Set the start bit and manually update this bit to off.
+7. The TCNTBn value of 159 is loaded into the down-counter, and then the output TOUTn is set to low.
+8. If down-counter counts down the value from TCNTBn to value in the TCMPBn register 109, the output changes from low to high.
+9. If the down-counter reaches 0, then it generates an interrupt request.
+10. The down-counter automatically reloads TCNTBn. This restarts the cycle.
+从英文描述可以知道：
+
+第一步:初始化TCNTBn寄存器159（50 + 109）还有TCMPBn 某个寄存器设置成109。
+
+第二步:启动定时器：设置开始位和手动更新这个位的关闭。
+
+第三步:将TCNTBn值159加载到向下计数器，然后输出toutn设置为低电平。
+
+第四步:如果计数器计数下降值从TCNTBn在TCMPBn寄存器109的值，输出从低到高的变化。
+
+第五步：如果向下计数器达到0，则会产生一个中断请求。
+
+第六步：向下计数器自动重载TCNTBn。这是重新启动周期。
+
+
+24.4 I/O Description Signal I/O Description Pad Type
+TOUT_2 Output PWMTIMER TOUT[2] XpwmTOUT[2] muxed
+TOUT_3 Output PWMTIMER TOUT[3] XpwmTOUT[3] muxed
+
+
+24.5.1.1 TCFG0
+看看具体的寄存器：
+
+这个就是配置预分频.
+
+0~7位是配置TIMER0/TIMER1
+
+8~15位是配置TIMER2/TIMER3/TIMER4
+
+
+
+
+
+
+24.5.1.2 TCFG1
+根据要使用的定时器进行配置
+
+以下这个是配置固定分频:
+
+0~3：TIMER0
+
+4~7:   TIMER1
+
+8~11: TIMER2 
+
+12~15:TIMER3
+16~19:TIMER4
+
+24.5.1.3 TCON
+
+以下这个是配置pwm控制寄存器：
+
+第0位:开始/停止定时器0
+
+第1位:更新TCNTB0和TCMTB0这两个计数器的值
+
+第2位:TOUT_0 输出极性
+
+第3位:定时器0自动装载    开或者关
+
+第4位:死区发生器开关
+
+对以上几位进行配置相应的参数就可以了：
+
+
+
+24.5.1.4 TCNTB0
+24.5.1.5 TCMPB0
+24.5.1.6 TCNTO0
+TCNTB0:0-31：计数缓存buffer:递减数值
+
+TCMPB0:0-31：定时器0比较buffer寄存器
+
+TCNTO0:0-31：定时器计数观察
+
+
+
+24.5.1.18 TINT_CSTAT
+
+0~4:定时器0/1/2/3/4  中断状态/清中断
+
+5~9:使能定时器0/1/2/3/4 中断
+
+
+
+
+
+pwm_request(int pwm_id, const char *label)
+
+
+pwm_free(struct pwm_device *pwm)
+
+pwm_enable(struct pwm_device *pwm)
+
+pwm_disable(struct pwm_device *pwm)
+
+pwm_config(struct pwm_device *pwm, int duty_ns, int period_ns)
+
+pwm_register(struct pwm_device *pwm)
+
+s3c_pwm_suspend(struct platform_device *pdev, pm_message_t state)
+
+s3c_pwm_resume(struct platform_device *pdev)
+
+static struct pwm_device *pwm;
+
+
+
+
+
+
+

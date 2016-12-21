@@ -1,0 +1,12 @@
+http://www.eefocus.com/ayayayaya/blog/11-11/235235_15767.html
+
+
+
+static struct platform_device dma4412_device_adc_con = {
+        .name   = "dma_adc_con",
+        .id     = -1,
+        .dev = {
+           .parent = &s3c_device_adc.dev,
+         },
+
+};
